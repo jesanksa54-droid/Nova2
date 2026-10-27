@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <title>Nova Browser</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b1020;--panel:#151d31;--line:#2a3652;--text:#f4f7ff;--muted:#a9b5cf;--accent:#6d8cff}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:radial-gradient(circle at top,#1b2b50,var(--bg) 55%);color:var(--text);min-height:100vh}
+    .wrap{max-width:900px;margin:auto;padding:24px 16px 40px}.top{display:flex;align-items:center;gap:12px;margin:12px 0 32px}
+    .logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#7c9cff,#8b5cf6);display:grid;place-items:center;font-size:23px}
+    h1{font-size:22px;margin:0}.sub{color:var(--muted);font-size:13px;margin-top:3px}
+    .searchbox{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:14px;box-shadow:0 16px 50px #0004}
+    form{display:flex;gap:10px}.query{min-width:0;flex:1;background:#0b1224;color:var(--text);border:1px solid var(--line);border-radius:13px;padding:15px 14px;font-size:16px;outline:none}
+    .query:focus{border-color:var(--accent)}button{border:0;border-radius:13px;background:var(--accent);color:white;font-weight:700;padding:0 20px;font-size:15px;cursor:pointer}
+    .hint{color:var(--muted);font-size:12px;margin:10px 4px 0}
+    .section{margin-top:28px}.section h2{font-size:15px;color:var(--muted);font-weight:600;margin:0 0 12px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:12px}
+    .tile{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--text);background:#121a2c;border:1px solid var(--line);padding:14px;border-radius:15px;transition:.15s}
+    .tile:hover{transform:translateY(-2px);border-color:#6d8cff}.ico{width:36px;height:36px;border-radius:11px;background:#263556;display:grid;place-items:center;font-size:18px}.label{font-size:14px;font-weight:650}.small{font-size:11px;color:var(--muted);margin-top:3px}
+    footer{text-align:center;color:var(--muted);font-size:12px;margin-top:36px}
+    @media(max-width:480px){.wrap{padding:18px 12px}.top{margin-bottom:24px}form{flex-direction:column}button{padding:14px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="top">
+      <div class="logo">🌐</div>
+      <div><h1>Nova Browser</h1><div class="sub">আপনার সহজ ওয়েব সার্চ পেজ</div></div>
+    </header>
+
+    <section class="searchbox">
+      <form id="searchForm">
+        <input class="query" id="query" type="text" placeholder="কিছু খুঁজুন বা ওয়েবসাইটের ঠিকানা লিখুন…" autocomplete="off" aria-label="Search or website address" required>
+        <button type="submit">খুঁজুন ↗</button>
+      </form>
+      <div class="hint">উদাহরণ: YouTube, weather in Madinah, অথবা example.com</div>
+    </section>
+
+    <section class="section">
+      <h2>দ্রুত খুলুন</h2>
+      <div class="grid">
+        <a class="tile" href="https://www.google.com" target="_blank" rel="noopener"><span class="ico">🔎</span><span><div class="label">Google</div><div class="small">সার্চ</div></span></a>
+        <a class="tile" href="https://www.youtube.com" target="_blank" rel="noopener"><span class="ico">▶️</span><span><div class="label">YouTube</div><div class="small">ভিডিও</div></span></a>
+        <a class="tile" href="https://www.wikipedia.org" target="_blank" rel="noopener"><span class="ico">📚</span><span><div class="label">Wikipedia</div><div class="small">জ্ঞানভাণ্ডার</div></span></a>
+        <a class="tile" href="https://github.com" target="_blank" rel="noopener"><span class="ico">🐙</span><span><div class="label">GitHub</div><div class="small">কোড</div></span></a>
+        <a class="tile" href="https://www.google.com/maps" target="_blank" rel="noopener"><span class="ico">📍</span><span><div class="label">Maps</div><div class="small">মানচিত্র</div></span></a>
+        <a class="tile" href="https://mail.google.com" target="_blank" rel="noopener"><span class="ico">✉️</span><span><div class="label">Gmail</div><div class="small">ইমেইল</div></span></a>
+      </div>
+    </section>
+    <footer>Nova Browser • GitHub Pages-এর জন্য তৈরি একটি ছোট ওয়েব অ্যাপ</footer>
+  </main>
+  <script>
+    const form = document.getElementById('searchForm');
+    const input = document.getElementById('query');
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const value = input.value.trim();
+      if (!value) return;
+      let destination;
+      if (/^(https?:\\/\\/)/i.test(value)) {
+        destination = value;
+      } else if (/^[a-z0-9.-]+\\.[a-z]{2,}([/:?#].*)?$/i.test(value) && !value.includes(' ')) {
+        destination = 'https://' + value;
+      } else {
+        destination = 'https://www.google.com/search?q=' + encodeURIComponent(value);
+      }
+      window.open(destination, '_blank', 'noopener');
+    });
+  </script>
+</body>
+</html>
